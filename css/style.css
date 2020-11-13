@@ -37,6 +37,12 @@ a:hover, a:active {
   color: #4786D6;
 }
 
+#busuanzi_container_site_pv{
+  display: inline !important;
+}
+#busuanzi_container_page_pv{
+  display: inline !important;
+}
 /*basic styles ends*/
 /*animation starts*/
 .animated {
