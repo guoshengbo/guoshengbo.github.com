@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="guoshengbo"><title>chrome 66版本自动播放策略 · 郭</title><meta name="description" content="背景Web浏览器正在朝着更严格的自动播放策略发展，以便改善用户体验，最大限度地降低安装广告拦截器的积极性并减少昂贵和/或受限网络上的数据消耗。这些更改旨在为用户提供更大的播放控制权，并使开发商获得合法用例。
+新的特性Chrome的自动播放政策很简单：
+
+静音自动播放总是允许的。
+在下列情况下允许使用"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/logo.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title><a href="/">郭</a></h3></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281; </a><span id="busuanzi_container_site_pv">本站访客数 <span id="busuanzi_value_site_pv"></span></span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/logo.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>chrome 66版本自动播放策略</a></h3></div><div class="post-content"><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>Web浏览器正在朝着更严格的自动播放策略发展，以便改善用户体验，最大限度地降低安装广告拦截器的积极性并减少昂贵和/或受限网络上的数据消耗。这些更改旨在为用户提供更大的播放控制权，并使开发商获得合法用例。</p>
+<h3 id="新的特性"><a href="#新的特性" class="headerlink" title="新的特性"></a>新的特性</h3><p>Chrome的自动播放政策很简单：</p>
+<ul>
+<li>静音自动播放总是允许的。</li>
+<li>在下列情况下允许使用声音自动播放：<ul>
+<li>用户已经与域进行了交互（点击，tap等）。</li>
+<li>在桌面上，用户的媒体参与指数阈值(MEI)已被越过，这意味着用户以前播放带有声音的视频。</li>
+<li>在移动设备上，用户已将该网站添加到主屏幕。</li>
+<li>顶部框架可以将自动播放权限授予其iframe以允许自动播放声音。</li>
+</ul>
+</li>
+</ul>
+<h5 id="媒体参与指数（Media-Engagement-Index-MEI"><a href="#媒体参与指数（Media-Engagement-Index-MEI" class="headerlink" title="媒体参与指数（Media Engagement Index)(MEI)"></a>媒体参与指数（Media Engagement Index)(MEI)</h5><p>MEI衡量个人在网站上消费媒体的倾向。Chrome 目前的方法是访问每个来源的重要媒体播放事件的比率：</p>
+<ul>
+<li>媒体消耗（音频/视频）必须大于7秒。</li>
+<li>音频必须存在并取消静音。</li>
+<li>视频选项卡处于活动状态。</li>
+<li>视频大小（以像素为单位）必须大于200x140。</li>
+</ul>
+<p>因此，Chrome会计算媒体参与度分数，该分数在定期播放媒体的网站上最高。足够高时，媒体播放只允许在桌面上自动播放。MEI是谷歌自动播放策略的一部分。它是一个算法，参考了媒体内容的持续时间、浏览器标签页是否活动、活动标签页视频的大小这一系列元素。不过也正因此，开发者难以在所有的网页上都测试这一算法的效果。</p>
+<p>用户的MEI位于chrome://media-engagement/内部页面</p>
+<h4 id="开发者开关"><a href="#开发者开关" class="headerlink" title="开发者开关"></a>开发者开关</h4><p>作为开发者，您可能需要在本地更改Chrome浏览器自动播放政策行为，以根据用户的参与情况测试您的网站。</p>
+<ul>
+<li>您可以决定通过将Chrome标志“自动播放策略”设置为“无需用户手势”来完全禁用自动播放策略 chrome://flags/#autoplay-policy。这样您就可以测试您的网站，就好像用户与您的网站保持紧密联系一样，并且始终允许播放自动播放。</li>
+<li>您也可以决定禁止使用MEI以及默认情况下全新MEI获得播放自动播放的网站是否允许新用户使用，从而决定禁止播放自动播放。这可以用两个来完成 内部开关用chrome.exe –disable-features=PreloadMediaEngagementData,AutoplayIgnoreWebAudio, MediaEngagementBypassAutoplayPolicies</li>
+</ul>
+<h4 id="Iframe-委托授权"><a href="#Iframe-委托授权" class="headerlink" title="Iframe 委托授权"></a>Iframe 委托授权</h4><p>一个功能政策使开发人员可以选择性地启用和禁用的各种浏览器的功能和API。一旦来源获得了自动播放权限，它就可以将该权限委托给具有自动播放功能的跨源iframe 。默认情况下，同源iframe可以使用自动播放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;！ - 允许自动播放。- &gt; </span><br><span class="line">&lt;iframe src = &quot;https://cross-origin.com/myvideo.html&quot; allow = &quot;autoplay&quot; /&gt; </span><br><span class="line">&lt;！ - 允许自动播放和全屏播放。- &gt; </span><br><span class="line">&lt;iframe src = &quot;https://cross-origin.com/myvideo.html&quot; allow = &quot;autoplay; fullscreen&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>当禁用自动播放的功能策略时，play()不带用户手势的调用将拒绝带有NotAllowedErrorDOMException 的promise。自动播放属性也将被忽略。</p>
+<p>示例场景:</p>
+<p>示例1：每次用户在他们的笔记本电脑上访问 <a href="http://www.iqiyi.com" target="_blank" rel="noopener">www.iqiyi.com</a> 时，他们都会观看电视节目或电影。由于其媒体参与度较高，因此可以自动播放。</p>
+<p>示例2：<a href="http://www.iqiyi.com" target="_blank" rel="noopener">www.iqiyi.com</a> 同时具有文字和视频内容。大多数用户偶尔会去该网站获取文字内容并观看视频。用户的媒体参与度较低，因此如果用户直接从社交媒体页面或搜索导航，则不允许自动播放。</p>
+<p>示例3：news.iqiyi.com 同时具有文字和视频内容。大多数人通过主页进入网站，然后点击新闻报道。由于用户与域名互动，新闻文章页面上的自动播放将被允许。但是，应该注意确保用户不会对自动播放内容感到意外。</p>
+<p>示例4： 在爱奇艺泡泡页面将iframe与电影预告片一起嵌入其评论中。用户与域进行交互以访问特定的网站，因此允许自动播放。但是，泡泡需要将该特权显式委托给iframe以便内容自动播放。</p>
+<h4 id="Chrome企业政策"><a href="#Chrome企业政策" class="headerlink" title="Chrome企业政策"></a>Chrome企业政策</h4><p>Chrome企业策略可以改变这种新的自动播放行为，以用于例如信息亭或无人值守系统。查看 配置策略和设置帮助页面，了解如何设置这些新的与自动播放相关的企业策略：</p>
+<ul>
+<li>该“AutoplayAllowed”策略控制自动播放是否允许。</li>
+<li>该“AutoplayWhitelist”政策，允许您指定的URL模式的白名单，其中自动播放将始终启用。</li>
+</ul>
+<p><strong>开发人员最佳实践</strong></p>
+<p>视频元素</p>
+<ul>
+<li><strong>永远不要假设视频会播放，并且在视频不是真正播放时不要显示暂停按钮。</strong></li>
+<li><strong>关注播放函数返回的Promise。</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var promise = document.querySelector(&apos;video&apos;).play();</span><br><span class="line">if (promise !== undefined) &#123;</span><br><span class="line">  promise.then(_ =&gt; &#123;</span><br><span class="line">    // Autoplay started!</span><br><span class="line">  &#125;).catch(error =&gt; &#123;</span><br><span class="line">    // Autoplay was prevented.</span><br><span class="line">    // Show a &quot;Play&quot; button so that user can start playback.</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>使用静音自动播放</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;video id=&quot;video&quot; muted autoplay&gt;</span><br><span class="line">&lt;button id=&quot;unmuteButton&quot;&gt;&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  unmuteButton.addEventListener(&apos;click&apos;, function() &#123;</span><br><span class="line">    video.muted = false;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>站点</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>微博</td>
+<td>静音开播</td>
+</tr>
+<tr>
+<td>优酷</td>
+<td>开播暂停</td>
+</tr>
+<tr>
+<td>腾讯</td>
+<td>部分静音开播部分暂停</td>
+</tr>
+<tr>
+<td>爱奇艺</td>
+<td>静音开播 部分暂停</td>
+</tr>
+<tr>
+<td>B站</td>
+<td>暂未处理</td>
+</tr>
+</tbody>
+</table>
+<p>以上情况截止本文发表前部分页面统计不代表全部。</p>
+<p>音频元素</p>
+<p>原生播放音频除了使用audio标签之外，还有另外一个API叫AudioContext，AudioContext接口表示由音频模块连接而成的音频处理图，每个模块对应一个AudioNode。AudioContext可以控制它所包含的节点的创建，以及音频处理、解码操作的执行。做任何事情之前都要先创建AudioContext对象，因为一切都发生在这个环境之中。</p>
+<p><strong>AudioContext播放声音</strong></p>
+<p>1、先请求音频文件，放到ArrayBuffer里面，然后用AudioContext的API进行decode解码，解码完了再让它去play。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function request (url) &#123;</span><br><span class="line">    return new Promise (resolve =&gt; &#123;</span><br><span class="line">        let xhr = new XMLHttpRequest();</span><br><span class="line">        xhr.open(&apos;GET&apos;, url);</span><br><span class="line">        // set response Type arraybuffer</span><br><span class="line">        xhr.responseType = &apos;arraybuffer&apos;;</span><br><span class="line">        xhr.onreadystatechange = function () &#123;</span><br><span class="line">            if (xhr.readyState === 4 &amp;&amp; xhr.status === 200) &#123;</span><br><span class="line">                resolve(xhr.response);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        xhr.send();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、实例化AudioContext<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// Safari是使用webkit前缀</span><br><span class="line">let context = new (window.AudioContext || window.webkitAudioContext)();</span><br></pre></td></tr></table></figure></p>
+<p>3、解码播放<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function play (context, decodeBuffer) &#123;</span><br><span class="line">    let source = context.createBufferSource();</span><br><span class="line">    source.buffer = decodeBuffer;</span><br><span class="line">    source.connect(context.destination);</span><br><span class="line">    // 从0s开始播放</span><br><span class="line">    source.start(0);</span><br><span class="line">&#125;</span><br><span class="line">// 请求音频数据</span><br><span class="line">let audioMedia = await request(url);</span><br><span class="line">// 进行decode和play</span><br><span class="line">context.decodeAudioData(audioMedia, decode =&gt; play(context, decode));</span><br></pre></td></tr></table></figure></p>
+<p>关于音频播放的可以参阅这篇文章讲的比较详细，这里不再讨论。</p>
+<p><strong>AudioContext创建时机</strong></p>
+<ul>
+<li><p>页面加载时创建<br>那么resume()在用户与页面进行交互之后（例如，用户单击按钮），您必须在某个时间进行调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Existing code unchanged.</span><br><span class="line">window.onload = function() &#123;</span><br><span class="line">  var context = new AudioContext();</span><br><span class="line">  // Setup all nodes</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// One-liner to resume playback when user interacted with the page.</span><br><span class="line">document.querySelector(&apos;button&apos;).addEventListener(&apos;click&apos;, function() &#123;</span><br><span class="line">  context.resume().then(() =&gt; &#123;</span><br><span class="line">    console.log(&apos;Playback resumed successfully&apos;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在用户与该页面进行交互时创建。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">document.querySelector(&apos;button&apos;).addEventListener(&apos;click&apos;, function() &#123;</span><br><span class="line">  var context = new AudioContext();</span><br><span class="line">  // Setup all nodes</span><br><span class="line">  ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>参考资料</strong><br><a href="https://developers.google.com/web/updates/2017/09/autoplay-policy-changes" target="_blank" rel="noopener">https://developers.google.com/web/updates/2017/09/autoplay-policy-changes</a></p>
+<p><a href="https://developers.google.com/web/updates/2016/07/autoplay" target="_blank" rel="noopener">https://developers.google.com/web/updates/2016/07/autoplay</a></p>
+<p><a href="https://github.com/WICG/feature-policy/blob/gh-pages/features.md" target="_blank" rel="noopener">https://github.com/WICG/feature-policy/blob/gh-pages/features.md</a></p>
+<p><a href="https://wicg.github.io/feature-policy/" target="_blank" rel="noopener">https://wicg.github.io/feature-policy/</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API/Using_Web_Audio_API" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API/Using_Web_Audio_API</a></p>
+<p><a href="https://segmentfault.com/a/1190000003115198" target="_blank" rel="noopener">https://segmentfault.com/a/1190000003115198</a></p>
+<p>原文地址: <a href="https://github.com/gnipbao/iblog/issues/25" target="_blank" rel="noopener">https://github.com/gnipbao/iblog/issues/25</a></p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-01-17</span><i class="fa fa-tag"></i><a class="tag" href="/tags/video/" title="video">video </a><a class="tag" href="/tags/chrome/" title="chrome">chrome </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://yoursite.com/2020/01/17/chrome 66版本自动播放策略/,郭,chrome 66版本自动播放策略,;"></a></div></div><span id="busuanzi_container_page_pv">本文阅读量 <span id="busuanzi_value_page_pv"></span></span><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/10/27/原生js获取用户IP&amp;根据浏览器生成唯一uuid/" title="原生js获取用户IP&amp;根据浏览器生成唯一uuid">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"superSample":2,"width":250,"height":500,"position":"left","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
